@@ -6,7 +6,6 @@ Web app mudah untuk menjana QR Code dari URL. 100% percuma, mesra pengguna, dan 
 - Generate QR Code dari URL secara terus di browser
 - Auto-centering QR Code
 - Auto-download sebagai PNG
-- Auto-prepend `https://` jika user terlupa
 - Responsive untuk desktop dan mobile
 - Tiada iklan, tiada server PHP diperlukan
 
