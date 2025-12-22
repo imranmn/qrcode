@@ -14,3 +14,6 @@ Web app mudah untuk menjana QR Code dari URL. 100% percuma, mesra pengguna, dan 
 2. Masukkan URL yang ingin dijana
 3. Klik "Generate QR Code"
 4. Klik butang "Download QR Code" untuk simpan PNG
+
+## License
+MIT License
