@@ -49,43 +49,58 @@ document.getElementById('qrForm').addEventListener('submit', function(e) {
 
   new QRCode(qrContainer, {
     text: url,
-    width: 300,
-    height: 300,
+    width: 250,
+    height: 250,
     correctLevel: QRCode.CorrectLevel.H
   });
 
   setTimeout(() => {
-    const qrCanvas = qrContainer.querySelector('canvas');
-    if (!qrCanvas) return;
+  const qrCanvas = qrContainer.querySelector('canvas');
+  if (!qrCanvas) return;
 
-    const margin = 20; // ← margin sebenar dalam PNG
-    const size = qrCanvas.width + margin * 2;
+  // ========= TETAPAN =========
+  const displaySize = qrCanvas.width; // 200
+  const downloadSize = 800;           // SAIZ BESAR UNTUK DOWNLOAD
+  const margin = 40;                  // quiet zone
+  // ===========================
 
-    const finalCanvas = document.createElement('canvas');
-    finalCanvas.width = size;
-    finalCanvas.height = size;
+  // scale factor
+  const scale = downloadSize / displaySize;
 
-    const ctx = finalCanvas.getContext('2d');
+  const finalSize = downloadSize + margin * 2;
 
-    // background putih
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, size, size);
+  const finalCanvas = document.createElement('canvas');
+  finalCanvas.width = finalSize;
+  finalCanvas.height = finalSize;
 
-    // lukis QR di tengah dengan margin
-    ctx.drawImage(qrCanvas, margin, margin);
+  const ctx = finalCanvas.getContext('2d');
 
-    const pngUrl = finalCanvas.toDataURL('image/png');
+  // background putih
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, finalSize, finalSize);
 
-    const a = document.createElement('a');
-    const hostname = new URL(url).hostname;
+  // lukis QR besar + tajam
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(
+    qrCanvas,
+    margin,
+    margin,
+    downloadSize,
+    downloadSize
+  );
 
-    a.href = pngUrl;
-    a.download = hostname + '.png';
-    a.className = 'btn btn-success mt-2';
-    a.textContent = 'Download QR Code';
+  const pngUrl = finalCanvas.toDataURL('image/png');
 
-    downloadContainer.appendChild(a);
-  }, 100);
+  const a = document.createElement('a');
+  const hostname = new URL(url).hostname;
+
+  a.href = pngUrl;
+  a.download = hostname + '.png';
+  a.className = 'btn btn-success mt-2';
+  a.textContent = 'Download QR Code';
+
+  downloadContainer.appendChild(a);
+}, 100);
 });
 </script>
 
